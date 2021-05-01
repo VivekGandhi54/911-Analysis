@@ -24,8 +24,8 @@ def main():
 	endEdges.extend(edgesAdded)
 	endEdges = [each for each in endEdges if each not in edgesDeleted]
 
-	makeplot(startVs, startEdges)
-	# makeplot(endVs, endEdges)
+	# makeplot(startVs, startEdges)
+	makeplot(endVs, endEdges)
 
 # ====================================================================================
 # Take in a 911 output xml file and convert it to a python dict for easier use
