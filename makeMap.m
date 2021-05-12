@@ -7,10 +7,13 @@
 %   eList = ouputSt.oldEdges;
 %   vList = ouputSt.vertexTypesPreEvent;
 %   makeMap(eList, vList, ouputSt);
+%
+% Run `opengl('save','software')` and reload shell to run on Raiju/Otachi
 
 % ======================================================
 
-function makeMap(eList, vList, ouputSt)
+function makeMap(eList, vList, ouputSt, filename)
+    fig = figure;
     global colorMap;
     
     % Default colorMap if undefined
@@ -71,6 +74,8 @@ function makeMap(eList, vList, ouputSt)
     end
 
     hold off
+    saveas(fig, filename)
+
 end
 
 % ======================================================
