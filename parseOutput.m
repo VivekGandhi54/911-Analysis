@@ -82,12 +82,17 @@ function retVal = parseOutput(outputFile, oldEdgesFile)
     % newEdges = (oldEdges + edgesAdded) - edgesDeleted
 
     retVal.newEdges = [retVal.oldEdges ; retVal.edgesAdded];
+    retVal.disconnected = retVal.oldEdges;
 
     for c = 1:length(retVal.edgesDeleted)
         row = retVal.edgesDeleted(c,:);
         [Result,~] = ismember(retVal.newEdges,row,'rows');
         location = find(Result == 1);
         retVal.newEdges(location,:) = [];
+
+        [Result,~] = ismember(retVal.disconnected,row,'rows');
+        location = find(Result == 1);
+        retVal.disconnected(location,:) = [];
     end
     
 % ======================================================

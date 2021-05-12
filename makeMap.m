@@ -11,6 +11,18 @@
 % ======================================================
 
 function makeMap(eList, vList, ouputSt)
+    global colorMap;
+    
+    % Default colorMap if undefined
+    if isempty(colorMap)
+        colorMap.CP = 'y';
+        colorMap.PR = 'g';
+        colorMap.PP = 'r';
+        colorMap.CALR = 'y';
+        colorMap.PSAP = 'r';
+        colorMap.RESP = 'b';
+    end
+
     hold on
 
     % Set figure limits and stuff
@@ -26,11 +38,11 @@ function makeMap(eList, vList, ouputSt)
         end
 
         if (edges(i, 3) == 4)       % CP
-            color = 'y';
+            color = colorMap.CP;
         elseif (edges(i, 3) == 5)   % PR
-            color = 'g';
+            color = colorMap.PR;
         else                        % PP
-            color = 'r';
+            color = colorMap.PP;
         end
 
         srcV = edges(i, 1) + 1;
@@ -47,11 +59,11 @@ function makeMap(eList, vList, ouputSt)
         end
 
         if (vList(i) == 3)          % CALR
-            color = 'y';
+            color = colorMap.CALR;
         elseif (vList(i) == 4)      % PSAP
-            color = 'r';
+            color = colorMap.PSAP;
         else                        % RESP
-            color = 'b';
+            color = colorMap.RESP;
         end
         
         % Plot each vertex

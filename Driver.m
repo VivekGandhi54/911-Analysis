@@ -1,17 +1,41 @@
 
 close all
+clear global
 clear
 clc
 
+% -----------------------------
+% colorMap to control coloring in output figure
+% -----------------------------
+global colorMap; 
+colorMap.CP = 'y';
+colorMap.PR = 'g';
+colorMap.PP = 'r';
+colorMap.CALR = 'y';
+colorMap.PSAP = 'r';
+colorMap.RESP = 'b';
+
+% -----------------------------
+% Unwrap and parse file data
+% -----------------------------
 outputFileName = 'test-small-out-911.xml';
 edgesFileName = 'allEdges.xml';
-ouputSt = parseOutput(outputFileName, edgesFileName);
+outputSt = parseOutput(outputFileName, edgesFileName);
 
-eList = ouputSt.newEdges;
-vList = ouputSt.vertexTypesPostEvent;
+% -----------------------------
+% Pick edge and vertex lists
+% -----------------------------
+eList = outputSt.oldEdges;
+% eList = outputSt.disconnected;
+% eList = outputSt.newEdges;
 
-% eList = ouputSt.oldEdges;
-% vList = ouputSt.vertexTypesPreEvent;
+vList = outputSt.vertexTypesPreEvent;
+% vList = outputSt.vertexTypesPostEvent;
 
-makeMap(eList, vList, ouputSt)
+% -----------------------------
+% Draw figure
+% -----------------------------
+makeMap(eList, vList, outputSt)
+
+
 
