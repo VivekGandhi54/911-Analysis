@@ -36,5 +36,5 @@ vList = outputSt.vertexTypesPreEvent;
 % Draw figure
 % -----------------------------
 jpgFileName = 'output.jpg';
-makeMap(eList, vList, ouputSt, jpgFileName)
+makeMap(eList, vList, outputSt, jpgFileName)
 
