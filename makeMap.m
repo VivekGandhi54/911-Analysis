@@ -32,6 +32,14 @@ function makeMap(eList, vList, ouputSt, filename)
     xlim([min(ouputSt.xloc) - 1, max(ouputSt.xloc) + 1])
     ylim([min(ouputSt.xloc) - 1, max(ouputSt.xloc) + 1])
 
+    % Dummy plots for legend
+    scatter(NaN,NaN,'','MarkerFaceColor',colorMap.CALR);
+    scatter(NaN,NaN,'','MarkerFaceColor',colorMap.PSAP);
+    scatter(NaN,NaN,'','MarkerFaceColor',colorMap.RESP);
+    plot([NaN,NaN],[NaN,NaN],colorMap.PP);
+    plot([NaN,NaN],[NaN,NaN],colorMap.CP);
+    plot([NaN,NaN],[NaN,NaN],colorMap.PR);
+    
     % For each edge
     for i = 1:length(eList)
         edges = sortrows(eList, 3); % Helps to draw PP and PR on top
@@ -70,8 +78,11 @@ function makeMap(eList, vList, ouputSt, filename)
         end
         
         % Plot each vertex
-        scatter(ouputSt.xloc(i), ouputSt.yloc(i), '', 'MarkerFaceColor', color)
+        scatter(ouputSt.xloc(i), ouputSt.yloc(i), 50, color, 'filled')
     end
+    
+    % Add legend
+    legend('CALR', 'PSAP', 'RESP','PP','CP','PR');
 
     hold off
     saveas(fig, filename)
