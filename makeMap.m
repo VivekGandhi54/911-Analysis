@@ -13,32 +13,34 @@
 % ======================================================
 
 function makeMap(eList, vList, ouputSt, filename)
+    global fig
     fig = figure;
-    global colorMap;
+    global colorMap2;
     
     % Default colorMap if undefined
-    if isempty(colorMap)
-        colorMap.CP = 'y';
-        colorMap.PR = 'g';
-        colorMap.PP = 'r';
-        colorMap.CALR = 'y';
-        colorMap.PSAP = 'r';
-        colorMap.RESP = 'b';
+    if isempty(colorMap2)
+        colorMap2.CP = 'y';
+        colorMap2.PR = 'g';
+        colorMap2.PP = 'r';
+        colorMap2.CALR = 'y';
+        colorMap2.PSAP = 'r';
+        colorMap2.RESP = 'b';
     end
 
     hold on
-
+    box on
+    
     % Set figure limits and stuff
     xlim([min(ouputSt.xloc) - 1, max(ouputSt.xloc) + 1])
     ylim([min(ouputSt.xloc) - 1, max(ouputSt.xloc) + 1])
 
     % Dummy plots for legend
-    scatter(NaN,NaN,'','MarkerFaceColor',colorMap.CALR);
-    scatter(NaN,NaN,'','MarkerFaceColor',colorMap.PSAP);
-    scatter(NaN,NaN,'','MarkerFaceColor',colorMap.RESP);
-    plot([NaN,NaN],[NaN,NaN],colorMap.PP);
-    plot([NaN,NaN],[NaN,NaN],colorMap.CP);
-    plot([NaN,NaN],[NaN,NaN],colorMap.PR);
+    scatter(NaN,NaN,'','MarkerFaceColor',colorMap2.CALR);
+    scatter(NaN,NaN,'','MarkerFaceColor',colorMap2.PSAP);
+    scatter(NaN,NaN,'','MarkerFaceColor',colorMap2.RESP);
+    plot([NaN,NaN],[NaN,NaN],'color',colorMap2.PP);
+    plot([NaN,NaN],[NaN,NaN],'color',colorMap2.CP);
+    plot([NaN,NaN],[NaN,NaN],'color',colorMap2.PR);
     
     % For each edge
     for i = 1:length(eList)
@@ -49,18 +51,21 @@ function makeMap(eList, vList, ouputSt, filename)
         end
 
         if (edges(i, 3) == 4)       % CP
-            color = colorMap.CP;
+            color = colorMap2.CP;
+            thickness = 0.6;
         elseif (edges(i, 3) == 5)   % PR
-            color = colorMap.PR;
+            color = colorMap2.PR;
+            thickness = 1;
         else                        % PP
-            color = colorMap.PP;
+            color = colorMap2.PP;
+            thickness = 1.4;
         end
 
         srcV = edges(i, 1) + 1;
         dstV = edges(i, 2) + 1;
 
         % Draw line segment edge
-        plot([ouputSt.xloc(srcV), ouputSt.xloc(dstV)], [ouputSt.yloc(srcV), ouputSt.yloc(dstV)], color);
+        plot([ouputSt.xloc(srcV), ouputSt.xloc(dstV)], [ouputSt.yloc(srcV), ouputSt.yloc(dstV)],'color', color,'LineWidth',thickness);
     end
 
     % For each vertex (draw vertices over edges)
@@ -70,19 +75,23 @@ function makeMap(eList, vList, ouputSt, filename)
         end
 
         if (vList(i) == 3)          % CALR
-            color = colorMap.CALR;
+            color = colorMap2.CALR;
+            markerSize = 30;
         elseif (vList(i) == 4)      % PSAP
-            color = colorMap.PSAP;
+            color = colorMap2.PSAP;
+            markerSize = 90;
         else                        % RESP
-            color = colorMap.RESP;
+            color = colorMap2.RESP;
+            markerSize = 65;
         end
         
         % Plot each vertex
-        scatter(ouputSt.xloc(i), ouputSt.yloc(i), 50, color, 'filled')
+        scatter(ouputSt.xloc(i), ouputSt.yloc(i), markerSize, color, 'filled')
     end
     
     % Add legend
-    legend('CALR', 'PSAP', 'RESP','PP','CP','PR');
+    legend('CALR', 'PSAP', 'RESP','PP','CP','PR', 'location', 'NorthEastOutside');
+    xticks(-1:10);
 
     hold off
     saveas(fig, filename)
