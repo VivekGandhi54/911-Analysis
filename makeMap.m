@@ -12,7 +12,7 @@
 
 % ======================================================
 
-function makeMap(eList, vList, ouputSt, filename)
+function makeMap(eList, vList, ouputSt, filename, zones)
     global fig
     fig = figure;
     global colorMap2;
@@ -33,15 +33,17 @@ function makeMap(eList, vList, ouputSt, filename)
     % Set figure limits and stuff
     xlim([min(ouputSt.xloc) - 1, max(ouputSt.xloc) + 1])
     ylim([min(ouputSt.xloc) - 1, max(ouputSt.xloc) + 1])
-
+    xticks(-1:10);
+    yticks(-1:10);
+    
     % Dummy plots for legend
-    scatter(NaN,NaN,'','MarkerFaceColor',colorMap2.CALR);
     scatter(NaN,NaN,'','MarkerFaceColor',colorMap2.PSAP);
     scatter(NaN,NaN,'','MarkerFaceColor',colorMap2.RESP);
+    scatter(NaN,NaN,'','MarkerFaceColor',colorMap2.CALR);
     plot([NaN,NaN],[NaN,NaN],'color',colorMap2.PP);
-    plot([NaN,NaN],[NaN,NaN],'color',colorMap2.CP);
     plot([NaN,NaN],[NaN,NaN],'color',colorMap2.PR);
-    
+    plot([NaN,NaN],[NaN,NaN],'color',colorMap2.CP);
+
     % For each edge
     for i = 1:length(eList)
         edges = sortrows(eList, 3); % Helps to draw PP and PR on top
@@ -88,12 +90,15 @@ function makeMap(eList, vList, ouputSt, filename)
         % Plot each vertex
         scatter(ouputSt.xloc(i), ouputSt.yloc(i), markerSize, color, 'filled')
     end
+
+    if (zones)
+        plot([-0.5,9.5],[4.5,4.5],'color',[20,20,20]/255);
+        plot([4.5,4.5],[-0.5,9.5],'color',[20,20,20]/255);
+    end
     
     % Add legend
-    legend('CALR', 'PSAP', 'RESP','PP','CP','PR', 'location', 'NorthEastOutside');
-    xticks(-1:10);
+    legend('PSAP','RESP','CALR','PP','PR','CP', 'location', 'NorthEastOutside');
 
-    hold off
     saveas(fig, filename)
 
 end

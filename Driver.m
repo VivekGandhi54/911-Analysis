@@ -36,5 +36,5 @@ vList = outputSt.vertexTypesPreEvent;
 % Draw figure
 % -----------------------------
 jpgFileName = 'output.svg';
-makeMap(eList, vList, outputSt, jpgFileName)
+makeMap(eList, vList, outputSt, jpgFileName, false)
 
